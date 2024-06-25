@@ -38,6 +38,29 @@ namespace HoSoUngVien.Modules.Xas
             }       
         }
 
+        public async Task<List<XaFullDto>> GetXaByHuyenId(int huyenId)
+        {
+            try
+            {
+                var xas = await _xa.GetAllListAsync(xa=>xa.HuyenId==huyenId);
+                var xaFullDtos = xas.Select(x => new XaFullDto
+                {
+                    Id = x.Id,
+                    HuyenId = x.HuyenId,
+                    TenXa = x.TenXa,
+                    Note = x.Note
+                }).ToList();
+                return xaFullDtos;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error get all xa:{e}");
+                throw;
+            }
+        }
+
+
+
         public async Task<bool> AddXa(XaDto xaDtoInput)
         {
             try {

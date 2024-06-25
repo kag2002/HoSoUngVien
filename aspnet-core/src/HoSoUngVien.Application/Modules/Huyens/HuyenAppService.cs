@@ -41,6 +41,28 @@ namespace HoSoUngVien.Modules.Huyens
             }
         }
 
+        public async Task<List<HuyenFullDto>> GetHuyenByTinhId(int tinhId)
+        {
+            try
+            {
+                var huyens = await _huyen.GetAllListAsync(huyen=>huyen.TinhId==tinhId);
+                var huyenFullDtos = huyens.Select(huyen => new HuyenFullDto
+                {
+                    Id = huyen.Id,
+                    TinhId = huyen.TinhId,
+                    TenHuyen = huyen.TenHuyen,
+                    Note = huyen.Note
+
+                }).ToList();
+                return huyenFullDtos;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error in GetAllHuyen: {e}");
+                throw;
+            }
+        }
+
 
         public async Task<bool> AddHuyen(HuyenDto huyenDtoInput)
         {

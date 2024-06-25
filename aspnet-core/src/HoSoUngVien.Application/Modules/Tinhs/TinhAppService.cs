@@ -37,8 +37,28 @@ namespace HoSoUngVien.Modules.Tinhs
                 Console.WriteLine($"Error Get All Tinh: {e}");
                 throw;
             }
+            
         }
-
+        public async Task<List<TinhFullDto>> GetTinhByThanhPho(int quocGiaId)
+        {
+            try
+            {
+                var tinhs = await _tinh.GetAllListAsync(tinh=>tinh.QuocGiaId==quocGiaId);
+                var tinhFullDtos = tinhs.Select(tinh => new TinhFullDto
+                {
+                    Id = tinh.Id,
+                    QuocGiaId = tinh.QuocGiaId,
+                    TenTinh = tinh.TenTinh,
+                    Note = tinh.Note
+                }).ToList();
+                return tinhFullDtos;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error Get All Tinh: {e}");
+                throw;
+            }
+        }
         public async Task<bool> AddTinh(TinhDto tinhDtoInput)
         {
             if(tinhDtoInput == null) throw new ArgumentNullException(nameof(tinhDtoInput),"Tinh Input Null");

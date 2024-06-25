@@ -1768,6 +1768,14 @@ namespace HoSoUngVien.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HuyenId");
+
+                    b.HasIndex("QuocGiaId");
+
+                    b.HasIndex("TinhId");
+
+                    b.HasIndex("XaId");
+
                     b.ToTable("BwUngVien");
                 });
 
@@ -2116,6 +2124,33 @@ namespace HoSoUngVien.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HoSoUngVien.DbEntities.UngVien", b =>
+                {
+                    b.HasOne("HoSoUngVien.DbEntities.Huyen", null)
+                        .WithMany("UngViens")
+                        .HasForeignKey("HuyenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HoSoUngVien.DbEntities.QuocGia", null)
+                        .WithMany("UngViens")
+                        .HasForeignKey("QuocGiaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HoSoUngVien.DbEntities.Tinh", null)
+                        .WithMany("UngViens")
+                        .HasForeignKey("TinhId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HoSoUngVien.DbEntities.Xa", null)
+                        .WithMany("UngViens")
+                        .HasForeignKey("XaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HoSoUngVien.DbEntities.Xa", b =>
                 {
                     b.HasOne("HoSoUngVien.DbEntities.Huyen", null)
@@ -2225,17 +2260,28 @@ namespace HoSoUngVien.Migrations
 
             modelBuilder.Entity("HoSoUngVien.DbEntities.Huyen", b =>
                 {
+                    b.Navigation("UngViens");
+
                     b.Navigation("Xas");
                 });
 
             modelBuilder.Entity("HoSoUngVien.DbEntities.QuocGia", b =>
                 {
                     b.Navigation("Tinhs");
+
+                    b.Navigation("UngViens");
                 });
 
             modelBuilder.Entity("HoSoUngVien.DbEntities.Tinh", b =>
                 {
                     b.Navigation("Huyens");
+
+                    b.Navigation("UngViens");
+                });
+
+            modelBuilder.Entity("HoSoUngVien.DbEntities.Xa", b =>
+                {
+                    b.Navigation("UngViens");
                 });
 #pragma warning restore 612, 618
         }

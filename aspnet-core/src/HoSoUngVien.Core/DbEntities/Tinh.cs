@@ -16,5 +16,6 @@ namespace HoSoUngVien.DbEntities
 
         public ICollection<Huyen> Huyens { get; set; }
 
+
     }
 }

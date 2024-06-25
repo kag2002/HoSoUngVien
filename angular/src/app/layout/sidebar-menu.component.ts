@@ -41,11 +41,6 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
   getMenuItems(): MenuItem[] {
     return [
-      new MenuItem(
-        this.l("Hồ sơ ứng viên"),
-        "/app/hosoungvien",
-        "fas fa-info-circle"
-      ),
       new MenuItem(this.l("About"), "/app/about", "fas fa-info-circle"),
       new MenuItem(this.l("HomePage"), "/app/home", "fas fa-home"),
       new MenuItem(
@@ -64,6 +59,19 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
         this.l("Users"),
         "/app/users",
         "fas fa-users",
+        "Pages.Users"
+      ),
+      new MenuItem(
+        this.l("Hồ sơ ứng viên"),
+        "/app/hosoungvien",
+        "fas fa-info-circle",
+        "Pages.Roles"
+      ),
+
+      new MenuItem(
+        this.l("Hồ sơ đặt phòng"),
+        "/app/Hosodat",
+        "fas fa-table-list ",
         "Pages.Users"
       ),
       // new MenuItem(this.l('MultiLevelMenu'), '', 'fas fa-circle', '', [

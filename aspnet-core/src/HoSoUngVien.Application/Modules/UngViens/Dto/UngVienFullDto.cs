@@ -8,7 +8,7 @@ namespace HoSoUngVien.Modules.UngViens.Dto
 {
     public class UngVienFullDto
     {
-        public int id {  get; set; }
+        public int Id {  get; set; }
         public string Ten { get; set; }
         public string GioiTinh { get; set; }
         public int NamSinh { get; set; }

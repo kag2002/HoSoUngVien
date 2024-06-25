@@ -12,8 +12,20 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { ServiceProxyModule } from "@shared/service-proxies/service-proxy.module";
 import { SharedModule } from "@shared/shared.module";
+import { AutoCompleteModule } from "primeng/autocomplete";
+import { ButtonModule } from "primeng/button";
+import { RadioButtonModule } from "primeng/radiobutton";
+import { MessagesModule } from "primeng/messages";
+import { ToastModule } from "primeng/toast";
+import { TableModule } from "primeng/table";
+
 import { HomeComponent } from "@app/home/home.component";
 import { AboutComponent } from "@app/about/about.component";
+import { HosoungvienComponent } from "./hosoungvien/hosoungvien.component";
+import { HosodatComponent } from "./admin/hosodat/hosodat.component";
+import { HosodatstartComponent } from "./admin/hosodat/hosodatstart/hosodatstart.component";
+import { QuanlyhosodatComponent } from "./admin/hosodat/quanlyhosodat/quanlyhosodat.component";
+
 // tenants
 import { TenantsComponent } from "@app/tenants/tenants.component";
 import { CreateTenantDialogComponent } from "./tenants/create-tenant/create-tenant-dialog.component";
@@ -38,14 +50,17 @@ import { SidebarComponent } from "./layout/sidebar.component";
 import { SidebarLogoComponent } from "./layout/sidebar-logo.component";
 import { SidebarUserPanelComponent } from "./layout/sidebar-user-panel.component";
 import { SidebarMenuComponent } from "./layout/sidebar-menu.component";
-import { HosoungvienComponent } from "./hosoungvien/hosoungvien.component";
+import { MessageService } from "primeng/api";
 
 @NgModule({
   declarations: [
-    HosoungvienComponent,
     AppComponent,
     HomeComponent,
     AboutComponent,
+    HosoungvienComponent,
+    HosodatComponent,
+    HosodatstartComponent,
+    QuanlyhosodatComponent,
     // tenants
     TenantsComponent,
     CreateTenantDialogComponent,
@@ -85,7 +100,13 @@ import { HosoungvienComponent } from "./hosoungvien/hosoungvien.component";
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,
+    AutoCompleteModule,
+    ButtonModule,
+    RadioButtonModule,
+    MessagesModule,
+    ToastModule,
+    TableModule,
   ],
-  providers: [],
+  providers: [ReactiveFormsModule, MessageService],
 })
 export class AppModule {}

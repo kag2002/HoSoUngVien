@@ -19,11 +19,12 @@ namespace HoSoUngVien.Modules.UngViens
         {
             _ungVien = ungVien;
         }
-        public async Task<List<UngVien>> GetAllUngVien(){
+        public async Task<List<UngVienFullDto>> GetAllUngVien(){
             try {
                 var ungViens = await _ungVien.GetAllListAsync();
-                var ungVienFullDtos = ungViens.Select(uv => new UngVien
+                var ungVienFullDtos = ungViens.Select(uv => new UngVienFullDto
             {
+                    Id= uv.Id,
                 Ten = uv.Ten,
                 GioiTinh = uv.GioiTinh,
                 NamSinh = uv.NamSinh,
@@ -38,6 +39,32 @@ namespace HoSoUngVien.Modules.UngViens
                 Console.WriteLine($"Error get UngVien: ${e}");throw;
             }
         }
+
+        public async Task<List<UngVienFullDto>> GetUngVienByCMND(string cmnd)
+        {
+            try
+            {
+                var ungViens = await _ungVien.GetAllListAsync(uv=>uv.CMND==cmnd);
+                var ungVienFullDtos = ungViens.Select(uv => new UngVienFullDto
+                {
+                    Id=uv.Id,
+                    Ten = uv.Ten,
+                    GioiTinh = uv.GioiTinh,
+                    NamSinh = uv.NamSinh,
+                    CMND = uv.CMND,
+                    QuocGiaId = uv.QuocGiaId,
+                    TinhId = uv.TinhId,
+                    HuyenId = uv.HuyenId,
+                    XaId = uv.XaId
+                }).ToList();
+                return ungVienFullDtos;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error get UngVien: ${e}"); throw;
+            }
+        }
+
         public async Task<bool> AddUngVien(UngVienDto ungVienDto) {
             try
             {
@@ -64,8 +91,8 @@ namespace HoSoUngVien.Modules.UngViens
             try
             {
             if(ungVienFullDto == null) { throw new ArgumentNullException(nameof(ungVienFullDto), $"Ung vien input Null"); }
-            var existingUngVien = await _ungVien.FirstOrDefaultAsync(uv => uv.Id == ungVienFullDto.id);
-            if(existingUngVien == null) { throw new ArgumentNullException(nameof(ungVienFullDto), $"Ung vien id:{ungVienFullDto.id} khong ton tai"); }
+            var existingUngVien = await _ungVien.FirstOrDefaultAsync(uv => uv.Id == ungVienFullDto.Id);
+            if(existingUngVien == null) { throw new ArgumentNullException(nameof(ungVienFullDto), $"Ung vien id:{ungVienFullDto.Id} khong ton tai"); }
 
             existingUngVien.Ten = ungVienFullDto.Ten;
             existingUngVien.GioiTinh = ungVienFullDto.GioiTinh;

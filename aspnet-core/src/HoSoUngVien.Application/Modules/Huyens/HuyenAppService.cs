@@ -27,8 +27,10 @@ namespace HoSoUngVien.Modules.Huyens
                 var huyenFullDtos = huyens.Select(huyen => new HuyenFullDto
                 {
                     Id = huyen.Id,
+                    TinhId = huyen.TinhId,
                     TenHuyen = huyen.TenHuyen,
                     Note = huyen.Note
+                    
                 }).ToList();
                 return huyenFullDtos;
             }
@@ -50,6 +52,7 @@ namespace HoSoUngVien.Modules.Huyens
                 }
                 var newHuyen = new Huyen
                 {
+                  TinhId=huyenDtoInput.TinhId,
                   TenHuyen = huyenDtoInput.TenHuyen,
                   Note = huyenDtoInput.Note
                 };
@@ -76,8 +79,8 @@ namespace HoSoUngVien.Modules.Huyens
                 {
                 throw new ArgumentException(nameof(huyenFullDto),$"Huyen voi id {huyenFullDto.Id} khong ton tai");     
                 }
-                
-              
+
+              existingHuyen.TinhId = huyenFullDto.TinhId;
               existingHuyen.TenHuyen = huyenFullDto.TenHuyen;
               existingHuyen.Note = huyenFullDto.Note; 
               await _huyen.UpdateAsync(existingHuyen);

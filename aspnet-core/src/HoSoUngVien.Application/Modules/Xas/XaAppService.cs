@@ -22,10 +22,10 @@ namespace HoSoUngVien.Modules.Xas
         {
             try { 
               var xas = await _xa.GetAllListAsync();
-           
               var xaFullDtos = xas.Select(x => new XaFullDto
               {
                 Id= x.Id,
+                HuyenId= x.HuyenId,
                 TenXa = x.TenXa,
                 Note = x.Note
               }).ToList();
@@ -43,6 +43,7 @@ namespace HoSoUngVien.Modules.Xas
             try {
               var xa = new Xa
               {
+                  HuyenId = xaDtoInput.HuyenId,
                 TenXa = xaDtoInput.TenXa,
                 Note = xaDtoInput.Note
               };
@@ -61,6 +62,7 @@ namespace HoSoUngVien.Modules.Xas
                 if(xaFullDto == null) throw new ArgumentNullException(nameof(xaFullDto),"Xa Input Null");
                 var existingXa = await _xa.FirstOrDefaultAsync(xa => xa.Id==xaFullDto.Id);
                 if (existingXa == null) throw new ArgumentNullException(nameof(xaFullDto), "Xa Input Null");
+                existingXa.HuyenId = xaFullDto.HuyenId;
                 existingXa.TenXa= xaFullDto.TenXa;
                 existingXa.Note= xaFullDto.Note;
                 await _xa.UpdateAsync(existingXa);

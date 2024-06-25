@@ -26,6 +26,7 @@ namespace HoSoUngVien.Modules.Tinhs
                 var tinhFullDtos = tinhs.Select(tinh => new TinhFullDto
                 {
                     Id = tinh.Id,
+                    QuocGiaId=tinh.QuocGiaId,
                     TenTinh = tinh.TenTinh,
                     Note = tinh.Note
                 }).ToList();
@@ -44,6 +45,7 @@ namespace HoSoUngVien.Modules.Tinhs
             try {
                 var newTinh = new Tinh
                 {
+                    QuocGiaId = tinhDtoInput.QuocGiaId,
                     TenTinh = tinhDtoInput.TenTinh,
                     Note = tinhDtoInput.Note
                 };
@@ -65,6 +67,7 @@ namespace HoSoUngVien.Modules.Tinhs
 
               if (existingTinh == null) { throw new ArgumentNullException(nameof(tinhFullDtoInput), $"Tinh voi id {tinhFullDtoInput.Id} khong ton tai"); }
 
+                existingTinh.QuocGiaId = tinhFullDtoInput.QuocGiaId;
               existingTinh.TenTinh = tinhFullDtoInput.TenTinh;
               existingTinh.Note = tinhFullDtoInput.Note;
               await _tinh.UpdateAsync(existingTinh);

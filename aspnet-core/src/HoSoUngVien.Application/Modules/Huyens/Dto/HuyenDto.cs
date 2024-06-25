@@ -10,8 +10,11 @@ namespace HoSoUngVien.Modules.Huyens.Dto
 {
     public class HuyenDto
     {
+        public int TinhId { get; set; }
         public string TenHuyen { get; set; }
         public string Note { get; set; }
+
+        
 
     }
 }

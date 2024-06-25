@@ -1,0 +1,22 @@
+.HoSoUngVien {
+  padding-top: 20px;
+}
+.FormThongTinLienHe {
+  padding: 20px;
+  margin: 20px 0 40px 0;
+}
+.FormThongTinLienHe div input {
+  width: 98%;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+}
+.ThongTinLienHe div {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.GenderRadio label {
+  margin: 0;
+  padding: 0;
+}

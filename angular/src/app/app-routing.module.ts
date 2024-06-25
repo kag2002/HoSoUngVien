@@ -9,6 +9,7 @@ import { UsersComponent } from "./users/users.component";
 import { TenantsComponent } from "./tenants/tenants.component";
 import { RolesComponent } from "app/roles/roles.component";
 import { ChangePasswordComponent } from "./users/change-password/change-password.component";
+import { HosodatComponent } from "./admin/hosodat/hosodat.component";
 
 @NgModule({
   imports: [
@@ -22,6 +23,11 @@ import { ChangePasswordComponent } from "./users/change-password/change-password
             component: HosoungvienComponent,
             data: { permission: "Pages.Users" },
             canActivate: [AppRouteGuard],
+          },
+          {
+            path: "Hosodat",
+            component: HosodatComponent,
+            // canActivate: [AppRouteGuard],
           },
           {
             path: "home",

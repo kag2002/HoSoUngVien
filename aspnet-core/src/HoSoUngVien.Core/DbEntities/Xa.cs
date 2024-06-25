@@ -9,6 +9,7 @@ namespace HoSoUngVien.DbEntities
 {
     public class Xa : FullAuditedEntity
     {
+        public int HuyenId {  get; set; }
         public string TenXa { get; set; }
         public string Note { get; set; }
         

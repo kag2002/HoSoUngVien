@@ -9,6 +9,7 @@ namespace HoSoUngVien.Modules.Xas.Dto
 {
     public class XaDto
     { 
+        public int HuyenId {  get; set; }
         public string TenXa { get; set; }
         public string Note { get; set; }
       

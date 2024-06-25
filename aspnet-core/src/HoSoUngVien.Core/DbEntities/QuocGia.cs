@@ -12,6 +12,6 @@ namespace HoSoUngVien.DbEntities
         public string TenQuocGia {  get; set; }
         public string Note {  get; set; }
 
-       
+        public ICollection<Tinh> Tinhs { get; set; }
     }
 }

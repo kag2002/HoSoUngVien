@@ -1,1 +1,161 @@
-<p>hosoungvien works!</p>
+<div class="HoSoUngVien container">
+  <p-toast />
+  <form [formGroup]="FormThongTinLienHe">
+    <div class="row">
+      <div class="col-lg-3">
+        <p-autoComplete
+          class="TimThanhPho form-group"
+          formControlName="locationsQuocGia"
+          [dropdown]="true"
+          [suggestions]="suggestionsQuocGia"
+          (completeMethod)="searchDiaDiem($event)"
+          field="tenQuocGia"
+          name="selectedDiadiem"
+          placeholder="Nhập địa điểm"
+        >
+          <i class="pi pi-building"></i>
+        </p-autoComplete>
+      </div>
+      <div class="col-lg-3">
+        <p-autoComplete
+          class="TimThanhPho form-group"
+          formControlName="locationsTinh"
+          [dropdown]="true"
+          [suggestions]="suggestionsTinh"
+          (completeMethod)="searchDiaDiem($event)"
+          field="tenTinh"
+          name="selectedDiadiem"
+          placeholder="Nhập tỉnh"
+        >
+          <i class="pi pi-building"></i>
+        </p-autoComplete>
+      </div>
+      <div class="col-lg-3">
+        <p-autoComplete
+          class="TimThanhPho form-group"
+          formControlName="locationsHuyen"
+          [dropdown]="true"
+          [suggestions]="suggestionsHuyen"
+          (completeMethod)="searchDiaDiem($event)"
+          field="tenHuyen"
+          name="selectedDiadiem"
+          placeholder="Nhập huyện"
+        >
+          <i class="pi pi-building"></i>
+        </p-autoComplete>
+      </div>
+      <div class="col-lg-3">
+        <p-autoComplete
+          class="TimThanhPho form-group"
+          formControlName="locationsXa"
+          [dropdown]="true"
+          [suggestions]="suggestionsXa"
+          (completeMethod)="searchDiaDiem($event)"
+          field="tenXa"
+          name="selectedDiadiem"
+          placeholder="Nhập xã"
+        >
+          <i class="pi pi-building"></i>
+        </p-autoComplete>
+      </div>
+    </div>
+
+    <div class="card flex FormThongTinLienHe">
+      <div class="col-lg-12" style="display: flex; flex-direction: column">
+        <label for="name">Họ và tên</label>
+        <input
+          type="text"
+          aria-describedby="username-help"
+          pInputText
+          formControlName="name"
+          required
+        />
+        <small
+          style="color: red"
+          *ngIf="
+            !FormThongTinLienHe.get('name').valid &&
+            FormThongTinLienHe.get('name').touched
+          "
+          >Vui lòng nhập tên</small
+        >
+        <small *ngIf="!FormThongTinLienHe.get('name').valid"
+          >Như trên CMND không dấu .</small
+        >
+      </div>
+      <hr />
+
+      <div class="col-lg-12 ThongTinLienHe" style="display: flex">
+        <div class="col-lg-6">
+          <label for="birth">Năm sinh</label>
+          <input
+            type="number"
+            aria-describedby="birth-help"
+            pInputText
+            formControlName="birth"
+            required
+          />
+          <small
+            style="color: red"
+            *ngIf="
+              !FormThongTinLienHe.get('birth').valid &&
+              FormThongTinLienHe.get('birth').touched
+            "
+            >Vui lòng nhập năm sinh hợp lệ gồm 4 số</small
+          >
+          <small *ngIf="!FormThongTinLienHe.get('birth').valid">VD: 2002</small>
+        </div>
+        <div class="col-lg-6" style="display: flex; flex-direction: column">
+          <label for="cccd">Số CCCD</label>
+          <input
+            type="number"
+            aria-describedby="cccd-help"
+            pInputText
+            formControlName="cccd"
+            required
+          />
+          <small
+            style="color: red"
+            *ngIf="
+              !FormThongTinLienHe.get('cccd').valid &&
+              FormThongTinLienHe.get('cccd').touched
+            "
+            >Vui lòng nhập cccd hợp lệ gồm 12 số</small
+          >
+          <small *ngIf="!FormThongTinLienHe.get('cccd').valid"
+            >Như trên CMND không dấu .</small
+          >
+        </div>
+      </div>
+      <hr />
+      <div class="col-lg-4">
+        <label for="gender">Giới tính</label>
+        <div class="row">
+          <div
+            *ngFor="let gioitinh of gioitinhs"
+            class="col-lg-4 field-checkbox GenderRadio"
+          >
+            <p-radioButton
+              [inputId]="gioitinh.key"
+              [value]="gioitinh"
+              formControlName="gender"
+            ></p-radioButton>
+
+            <label style="margin: 0" [for]="gioitinh.key" class="ml-2">{{
+              gioitinh.name
+            }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p-button
+      (click)="onAddHoSo()"
+      [disabled]="!FormThongTinLienHe.valid"
+      label="Đăng ký"
+      [raised]="true"
+    />
+  </form>
+  <pre>
+    {{ FormThongTinLienHe.value | json }}
+  </pre>
+</div>

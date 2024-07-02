@@ -18,6 +18,7 @@ import { RadioButtonModule } from "primeng/radiobutton";
 import { MessagesModule } from "primeng/messages";
 import { ToastModule } from "primeng/toast";
 import { TableModule } from "primeng/table";
+import { DropdownModule } from "primeng/dropdown";
 
 import { HomeComponent } from "@app/home/home.component";
 import { AboutComponent } from "@app/about/about.component";
@@ -106,6 +107,7 @@ import { MessageService } from "primeng/api";
     MessagesModule,
     ToastModule,
     TableModule,
+    DropdownModule,
   ],
   providers: [ReactiveFormsModule, MessageService],
 })

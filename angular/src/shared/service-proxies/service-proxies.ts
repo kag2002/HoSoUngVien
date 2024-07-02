@@ -275,6 +275,69 @@ export class HuyenServiceProxy {
     }
 
     /**
+     * @param tinhId (optional) 
+     * @return Success
+     */
+    getHuyenByTinhId(tinhId: number | undefined): Observable<HuyenFullDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Huyen/GetHuyenByTinhId?";
+        if (tinhId === null)
+            throw new Error("The parameter 'tinhId' cannot be null.");
+        else if (tinhId !== undefined)
+            url_ += "tinhId=" + encodeURIComponent("" + tinhId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetHuyenByTinhId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetHuyenByTinhId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<HuyenFullDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<HuyenFullDto[]>;
+        }));
+    }
+
+    protected processGetHuyenByTinhId(response: HttpResponseBase): Observable<HuyenFullDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(HuyenFullDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param body (optional) 
      * @return Success
      */
@@ -1584,6 +1647,69 @@ export class TinhServiceProxy {
     }
 
     /**
+     * @param quocGiaId (optional) 
+     * @return Success
+     */
+    getTinhByThanhPho(quocGiaId: number | undefined): Observable<TinhFullDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Tinh/GetTinhByThanhPho?";
+        if (quocGiaId === null)
+            throw new Error("The parameter 'quocGiaId' cannot be null.");
+        else if (quocGiaId !== undefined)
+            url_ += "quocGiaId=" + encodeURIComponent("" + quocGiaId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTinhByThanhPho(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTinhByThanhPho(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<TinhFullDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<TinhFullDto[]>;
+        }));
+    }
+
+    protected processGetTinhByThanhPho(response: HttpResponseBase): Observable<TinhFullDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(TinhFullDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param body (optional) 
      * @return Success
      */
@@ -2821,6 +2947,69 @@ export class XaServiceProxy {
     }
 
     /**
+     * @param huyenId (optional) 
+     * @return Success
+     */
+    getXaByHuyenId(huyenId: number | undefined): Observable<XaFullDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Xa/GetXaByHuyenId?";
+        if (huyenId === null)
+            throw new Error("The parameter 'huyenId' cannot be null.");
+        else if (huyenId !== undefined)
+            url_ += "huyenId=" + encodeURIComponent("" + huyenId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetXaByHuyenId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetXaByHuyenId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<XaFullDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<XaFullDto[]>;
+        }));
+    }
+
+    protected processGetXaByHuyenId(response: HttpResponseBase): Observable<XaFullDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(XaFullDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param body (optional) 
      * @return Success
      */
@@ -3665,6 +3854,7 @@ export interface IGetRoleForEditOutput {
 }
 
 export class HuyenDto implements IHuyenDto {
+    tinhId: number;
     tenHuyen: string | undefined;
     note: string | undefined;
 
@@ -3679,6 +3869,7 @@ export class HuyenDto implements IHuyenDto {
 
     init(_data?: any) {
         if (_data) {
+            this.tinhId = _data["tinhId"];
             this.tenHuyen = _data["tenHuyen"];
             this.note = _data["note"];
         }
@@ -3693,6 +3884,7 @@ export class HuyenDto implements IHuyenDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["tinhId"] = this.tinhId;
         data["tenHuyen"] = this.tenHuyen;
         data["note"] = this.note;
         return data;
@@ -3707,12 +3899,14 @@ export class HuyenDto implements IHuyenDto {
 }
 
 export interface IHuyenDto {
+    tinhId: number;
     tenHuyen: string | undefined;
     note: string | undefined;
 }
 
 export class HuyenFullDto implements IHuyenFullDto {
     id: number;
+    tinhId: number;
     tenHuyen: string | undefined;
     note: string | undefined;
 
@@ -3728,6 +3922,7 @@ export class HuyenFullDto implements IHuyenFullDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.tinhId = _data["tinhId"];
             this.tenHuyen = _data["tenHuyen"];
             this.note = _data["note"];
         }
@@ -3743,6 +3938,7 @@ export class HuyenFullDto implements IHuyenFullDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["tinhId"] = this.tinhId;
         data["tenHuyen"] = this.tenHuyen;
         data["note"] = this.note;
         return data;
@@ -3758,6 +3954,7 @@ export class HuyenFullDto implements IHuyenFullDto {
 
 export interface IHuyenFullDto {
     id: number;
+    tinhId: number;
     tenHuyen: string | undefined;
     note: string | undefined;
 }
@@ -4774,6 +4971,7 @@ export interface ITenantLoginInfoDto {
 }
 
 export class TinhDto implements ITinhDto {
+    quocGiaId: number;
     tenTinh: string | undefined;
     note: string | undefined;
 
@@ -4788,6 +4986,7 @@ export class TinhDto implements ITinhDto {
 
     init(_data?: any) {
         if (_data) {
+            this.quocGiaId = _data["quocGiaId"];
             this.tenTinh = _data["tenTinh"];
             this.note = _data["note"];
         }
@@ -4802,6 +5001,7 @@ export class TinhDto implements ITinhDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["quocGiaId"] = this.quocGiaId;
         data["tenTinh"] = this.tenTinh;
         data["note"] = this.note;
         return data;
@@ -4816,12 +5016,14 @@ export class TinhDto implements ITinhDto {
 }
 
 export interface ITinhDto {
+    quocGiaId: number;
     tenTinh: string | undefined;
     note: string | undefined;
 }
 
 export class TinhFullDto implements ITinhFullDto {
     id: number;
+    quocGiaId: number;
     tenTinh: string | undefined;
     note: string | undefined;
 
@@ -4837,6 +5039,7 @@ export class TinhFullDto implements ITinhFullDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.quocGiaId = _data["quocGiaId"];
             this.tenTinh = _data["tenTinh"];
             this.note = _data["note"];
         }
@@ -4852,6 +5055,7 @@ export class TinhFullDto implements ITinhFullDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["quocGiaId"] = this.quocGiaId;
         data["tenTinh"] = this.tenTinh;
         data["note"] = this.note;
         return data;
@@ -4867,6 +5071,7 @@ export class TinhFullDto implements ITinhFullDto {
 
 export interface ITinhFullDto {
     id: number;
+    quocGiaId: number;
     tenTinh: string | undefined;
     note: string | undefined;
 }
@@ -5219,6 +5424,7 @@ export interface IUserLoginInfoDto {
 }
 
 export class XaDto implements IXaDto {
+    huyenId: number;
     tenXa: string | undefined;
     note: string | undefined;
 
@@ -5233,6 +5439,7 @@ export class XaDto implements IXaDto {
 
     init(_data?: any) {
         if (_data) {
+            this.huyenId = _data["huyenId"];
             this.tenXa = _data["tenXa"];
             this.note = _data["note"];
         }
@@ -5247,6 +5454,7 @@ export class XaDto implements IXaDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["huyenId"] = this.huyenId;
         data["tenXa"] = this.tenXa;
         data["note"] = this.note;
         return data;
@@ -5261,11 +5469,13 @@ export class XaDto implements IXaDto {
 }
 
 export interface IXaDto {
+    huyenId: number;
     tenXa: string | undefined;
     note: string | undefined;
 }
 
 export class XaFullDto implements IXaFullDto {
+    huyenId: number;
     id: number;
     tenXa: string | undefined;
     note: string | undefined;
@@ -5281,6 +5491,7 @@ export class XaFullDto implements IXaFullDto {
 
     init(_data?: any) {
         if (_data) {
+            this.huyenId = _data["huyenId"];
             this.id = _data["id"];
             this.tenXa = _data["tenXa"];
             this.note = _data["note"];
@@ -5296,6 +5507,7 @@ export class XaFullDto implements IXaFullDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["huyenId"] = this.huyenId;
         data["id"] = this.id;
         data["tenXa"] = this.tenXa;
         data["note"] = this.note;
@@ -5311,6 +5523,7 @@ export class XaFullDto implements IXaFullDto {
 }
 
 export interface IXaFullDto {
+    huyenId: number;
     id: number;
     tenXa: string | undefined;
     note: string | undefined;

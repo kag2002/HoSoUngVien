@@ -1,5 +1,5 @@
 <div class="HoSoUngVien container">
-  <p-toast />
+  <p-toast></p-toast>
   <form [formGroup]="FormThongTinLienHe">
     <div class="row">
       <div class="col-lg-3">
@@ -8,55 +8,113 @@
           formControlName="locationsQuocGia"
           [dropdown]="true"
           [suggestions]="suggestionsQuocGia"
-          (completeMethod)="searchDiaDiem($event)"
+          (completeMethod)="searchDiaDiem($event, 'locationsQuocGia')"
           field="tenQuocGia"
-          name="selectedDiadiem"
-          placeholder="Nhập địa điểm"
+          name="locationsQuocGia"
+          placeholder="Nhập quốc gia"
+          [ngClass]="{
+            'is-invalid':
+              !FormThongTinLienHe.get('locationsQuocGia').valid &&
+              FormThongTinLienHe.get('locationsQuocGia').touched
+          }"
         >
           <i class="pi pi-building"></i>
         </p-autoComplete>
+        <small
+          *ngIf="
+            !FormThongTinLienHe.get('locationsQuocGia').valid &&
+            FormThongTinLienHe.get('locationsQuocGia').touched
+          "
+          style="color: red"
+          >Vui lòng nhập quốc gia</small
+        >
       </div>
+
       <div class="col-lg-3">
         <p-autoComplete
+          [disabled]="!FormThongTinLienHe.value.locationsQuocGia"
           class="TimThanhPho form-group"
           formControlName="locationsTinh"
           [dropdown]="true"
           [suggestions]="suggestionsTinh"
-          (completeMethod)="searchDiaDiem($event)"
+          (completeMethod)="searchDiaDiem($event, 'locationsTinh')"
           field="tenTinh"
-          name="selectedDiadiem"
+          name="locationsTinh"
           placeholder="Nhập tỉnh"
+          [ngClass]="{
+            'is-invalid':
+              !FormThongTinLienHe.get('locationsTinh').valid &&
+              FormThongTinLienHe.get('locationsTinh').touched
+          }"
         >
           <i class="pi pi-building"></i>
         </p-autoComplete>
+        <small
+          *ngIf="
+            !FormThongTinLienHe.get('locationsTinh').valid &&
+            FormThongTinLienHe.get('locationsTinh').touched
+          "
+          style="color: red"
+          >Vui lòng nhập tỉnh</small
+        >
       </div>
+
       <div class="col-lg-3">
         <p-autoComplete
+          [disabled]="!FormThongTinLienHe.value.locationsTinh"
           class="TimThanhPho form-group"
           formControlName="locationsHuyen"
           [dropdown]="true"
           [suggestions]="suggestionsHuyen"
-          (completeMethod)="searchDiaDiem($event)"
+          (completeMethod)="searchDiaDiem($event, 'locationsHuyen')"
           field="tenHuyen"
-          name="selectedDiadiem"
+          name="locationsHuyen"
           placeholder="Nhập huyện"
+          [ngClass]="{
+            'is-invalid':
+              !FormThongTinLienHe.get('locationsHuyen').valid &&
+              FormThongTinLienHe.get('locationsHuyen').touched
+          }"
         >
           <i class="pi pi-building"></i>
         </p-autoComplete>
+        <small
+          *ngIf="
+            !FormThongTinLienHe.get('locationsHuyen').valid &&
+            FormThongTinLienHe.get('locationsHuyen').touched
+          "
+          style="color: red"
+          >Vui lòng nhập huyện</small
+        >
       </div>
+
       <div class="col-lg-3">
         <p-autoComplete
+          [disabled]="!FormThongTinLienHe.value.locationsHuyen"
           class="TimThanhPho form-group"
           formControlName="locationsXa"
           [dropdown]="true"
           [suggestions]="suggestionsXa"
-          (completeMethod)="searchDiaDiem($event)"
+          (completeMethod)="searchDiaDiem($event, 'locationsXa')"
           field="tenXa"
-          name="selectedDiadiem"
+          name="locationsXa"
           placeholder="Nhập xã"
+          [ngClass]="{
+            'is-invalid':
+              !FormThongTinLienHe.get('locationsXa').valid &&
+              FormThongTinLienHe.get('locationsXa').touched
+          }"
         >
           <i class="pi pi-building"></i>
         </p-autoComplete>
+        <small
+          *ngIf="
+            !FormThongTinLienHe.get('locationsXa').valid &&
+            FormThongTinLienHe.get('locationsXa').touched
+          "
+          style="color: red"
+          >Vui lòng nhập xã</small
+        >
       </div>
     </div>
 
@@ -69,17 +127,22 @@
           pInputText
           formControlName="name"
           required
+          [ngClass]="{
+            'is-invalid':
+              !FormThongTinLienHe.get('name').valid &&
+              FormThongTinLienHe.get('name').touched
+          }"
         />
         <small
-          style="color: red"
           *ngIf="
             !FormThongTinLienHe.get('name').valid &&
             FormThongTinLienHe.get('name').touched
           "
+          style="color: red"
           >Vui lòng nhập tên</small
         >
         <small *ngIf="!FormThongTinLienHe.get('name').valid"
-          >Như trên CMND không dấu .</small
+          >Như trên CMND không dấu.</small
         >
       </div>
       <hr />
@@ -93,13 +156,18 @@
             pInputText
             formControlName="birth"
             required
+            [ngClass]="{
+              'is-invalid':
+                !FormThongTinLienHe.get('birth').valid &&
+                FormThongTinLienHe.get('birth').touched
+            }"
           />
           <small
-            style="color: red"
             *ngIf="
               !FormThongTinLienHe.get('birth').valid &&
               FormThongTinLienHe.get('birth').touched
             "
+            style="color: red"
             >Vui lòng nhập năm sinh hợp lệ gồm 4 số</small
           >
           <small *ngIf="!FormThongTinLienHe.get('birth').valid">VD: 2002</small>
@@ -107,22 +175,27 @@
         <div class="col-lg-6" style="display: flex; flex-direction: column">
           <label for="cccd">Số CCCD</label>
           <input
-            type="number"
+            type="text"
             aria-describedby="cccd-help"
             pInputText
             formControlName="cccd"
             required
+            [ngClass]="{
+              'is-invalid':
+                !FormThongTinLienHe.get('cccd').valid &&
+                FormThongTinLienHe.get('cccd').touched
+            }"
           />
           <small
-            style="color: red"
             *ngIf="
               !FormThongTinLienHe.get('cccd').valid &&
               FormThongTinLienHe.get('cccd').touched
             "
+            style="color: red"
             >Vui lòng nhập cccd hợp lệ gồm 12 số</small
           >
           <small *ngIf="!FormThongTinLienHe.get('cccd').valid"
-            >Như trên CMND không dấu .</small
+            >Như trên CMND không dấu.</small
           >
         </div>
       </div>
@@ -138,24 +211,29 @@
               [inputId]="gioitinh.key"
               [value]="gioitinh"
               formControlName="gender"
+              [ngClass]="{
+                'is-invalid':
+                  !FormThongTinLienHe.get('gender').valid &&
+                  FormThongTinLienHe.get('gender').touched
+              }"
             ></p-radioButton>
-
             <label style="margin: 0" [for]="gioitinh.key" class="ml-2">{{
               gioitinh.name
             }}</label>
           </div>
         </div>
+        <small
+          *ngIf="
+            !FormThongTinLienHe.get('gender').valid &&
+            FormThongTinLienHe.get('gender').touched
+          "
+          style="color: red"
+          >Vui lòng chọn giới tính</small
+        >
       </div>
     </div>
 
-    <p-button
-      (click)="onAddHoSo()"
-      [disabled]="!FormThongTinLienHe.valid"
-      label="Đăng ký"
-      [raised]="true"
-    />
+    <p-button (click)="onAddHoSo()" label="Đăng ký" [raised]="true"></p-button>
   </form>
-  <pre>
-    {{ FormThongTinLienHe.value | json }}
-  </pre>
+  <pre>{{ FormThongTinLienHe.value | json }}</pre>
 </div>

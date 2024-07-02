@@ -69,7 +69,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
       ),
 
       new MenuItem(
-        this.l("Hồ sơ đặt phòng"),
+        this.l("Hồ sơ ứng viên"),
         "/app/Hosodat",
         "fas fa-table-list ",
         "Pages.Users"

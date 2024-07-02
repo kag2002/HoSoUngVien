@@ -23,6 +23,10 @@ import { ExcelExportService } from "../../app/service/excel-export.service";
 })
 export class HosoungvienComponent implements OnInit {
   FormThongTinLienHe: FormGroup;
+  allQuocGia: QuocGiaFullDto[] = [];
+  allTinh: TinhFullDto[] = [];
+  allHuyen: HuyenFullDto[] = [];
+  allXa: XaFullDto[] = [];
   suggestionsQuocGia: QuocGiaFullDto[];
   suggestionsTinh: TinhFullDto[];
   suggestionsHuyen: HuyenFullDto[];
@@ -53,6 +57,23 @@ export class HosoungvienComponent implements OnInit {
       { severity: "error", detail: "Error Message" },
     ];
     this.initForm();
+
+    this._quocgiaService.getAllQuocGia().subscribe((result) => {
+      this.allQuocGia = result;
+      this.suggestionsQuocGia = result;
+    });
+    this._tinhService.getAllTinh().subscribe((result) => {
+      this.allTinh = result;
+      this.suggestionsTinh = result;
+    });
+    this._huyenService.getAllHuyen().subscribe((result) => {
+      this.allHuyen = result;
+      this.suggestionsHuyen = result;
+    });
+    this._xaService.getAllXa().subscribe((result) => {
+      this.allXa = result;
+      this.suggestionsXa = result;
+    });
   }
 
   private initForm() {
@@ -68,61 +89,81 @@ export class HosoungvienComponent implements OnInit {
     });
   }
 
-  searchDiaDiem(event) {
+  searchDiaDiem(event, field) {
     const query = event.query;
-    this._quocgiaService.getAllQuocGia().subscribe((result) => {
-      this.suggestionsQuocGia = this.filterQuocgia(query, result);
-    });
-    this._tinhService.getAllTinh().subscribe((result) => {
-      this.suggestionsTinh = this.filterTinh(query, result);
-    });
-    this._huyenService.getAllHuyen().subscribe((result) => {
-      this.suggestionsHuyen = this.filterHuyen(query, result);
-    });
-    this._xaService.getAllXa().subscribe((result) => {
-      this.suggestionsXa = this.filterXa(query, result);
-    });
+    if (field === "locationsQuocGia") {
+      this.suggestionsQuocGia = this.filterQuocgia(query);
+    } else if (field === "locationsTinh") {
+      this.suggestionsTinh = this.filterTinh(query);
+    } else if (field === "locationsHuyen") {
+      this.suggestionsHuyen = this.filterHuyen(query);
+    } else if (field === "locationsXa") {
+      this.suggestionsXa = this.filterXa(query);
+    }
   }
 
-  filterQuocgia(query, diaDiem: QuocGiaFullDto[]): any[] {
-    const filter: any[] = [];
-    for (const i of diaDiem) {
-      if (i.tenQuocGia.toLowerCase().indexOf(query.toLowerCase()) === 0) {
-        filter.push(i);
-      }
-    }
-    return filter;
-  }
-  filterTinh(query, diaDiem: TinhFullDto[]): any[] {
-    const filter: any[] = [];
-    for (const i of diaDiem) {
-      if (i.tenTinh.toLowerCase().indexOf(query.toLowerCase()) === 0) {
-        filter.push(i);
-      }
-    }
-    return filter;
-  }
-  filterHuyen(query, diaDiem: HuyenFullDto[]): any[] {
-    const filter: any[] = [];
-    for (const i of diaDiem) {
-      if (i.tenHuyen.toLowerCase().indexOf(query.toLowerCase()) === 0) {
-        filter.push(i);
-      }
-    }
-    return filter;
-  }
-  filterXa(query, diaDiem: XaFullDto[]): any[] {
-    const filter: any[] = [];
-    for (const i of diaDiem) {
-      if (i.tenXa.toLowerCase().indexOf(query.toLowerCase()) === 0) {
-        filter.push(i);
-      }
-    }
-    return filter;
+  filterQuocgia(query: string): QuocGiaFullDto[] {
+    return this.allQuocGia.filter((i) =>
+      i.tenQuocGia.toLowerCase().includes(query.toLowerCase())
+    );
   }
 
+  filterTinh(query: string): TinhFullDto[] {
+    const selectedQuocGia = this.FormThongTinLienHe.value.locationsQuocGia;
+    if (selectedQuocGia) {
+      this._tinhService
+        .getTinhByThanhPho(selectedQuocGia.id)
+        .subscribe((result) => {
+          this.suggestionsTinh = result.filter((i) =>
+            i.tenTinh.toLowerCase().includes(query.toLowerCase())
+          );
+        });
+    } else {
+      return this.allTinh.filter((i) =>
+        i.tenTinh.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+  }
+
+  filterHuyen(query: string): HuyenFullDto[] {
+    const selectedTinh = this.FormThongTinLienHe.value.locationsTinh;
+    if (selectedTinh) {
+      this._huyenService
+        .getHuyenByTinhId(selectedTinh.id)
+        .subscribe((result) => {
+          this.suggestionsHuyen = result.filter((i) =>
+            i.tenHuyen.toLowerCase().includes(query.toLowerCase())
+          );
+        });
+    } else {
+      return this.allHuyen.filter((i) =>
+        i.tenHuyen.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+  }
+
+  filterXa(query: string): XaFullDto[] {
+    const selectedHuyen = this.FormThongTinLienHe.value.locationsHuyen;
+    if (selectedHuyen) {
+      this._xaService.getXaByHuyenId(selectedHuyen.id).subscribe((result) => {
+        this.suggestionsXa = result.filter((i) =>
+          i.tenXa.toLowerCase().includes(query.toLowerCase())
+        );
+      });
+    } else {
+      return this.allXa.filter((i) =>
+        i.tenXa.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+  }
+  private markAllAsTouched() {
+    this.FormThongTinLienHe.markAllAsTouched();
+  }
   onAddHoSo() {
-    debugger;
+    if (this.FormThongTinLienHe.invalid) {
+      this.markAllAsTouched();
+      return;
+    }
     this.thongTinUngVien.ten = this.FormThongTinLienHe.value.name;
     this.thongTinUngVien.cmnd = this.FormThongTinLienHe.value.cccd;
     this.thongTinUngVien.gioiTinh = this.FormThongTinLienHe.value.gender.key;
@@ -150,7 +191,7 @@ export class HosoungvienComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Đặt không thành công vui lòng kiểm tra lại",
+          detail: `Đặt không thành công: ${error.message}`,
         });
       }
     );
